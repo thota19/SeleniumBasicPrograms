@@ -1,0 +1,50 @@
+What are we planning to Achieve?
+-> BDD Framework creation from Scratch which is supported in Azure CI/CD Pipeline.
+
+How to Achieve it?
+-> Complete below Tasks which are specifically assigned for you
+-> Once you complete your assigned task, Document it in an understandable manner so that other 2 resources can refer
+-> At last Combine all the 8 Tasks into one common project (Before combining, Get your individual codes reviewed by me)
+
+Things to Avoid:
+-> Don't Create all the Tasks in one common Package, Maintain separate packages for all 8 tasks for better understanding
+-> Don't use irrelevant names for classes or methods or any Strings(Ex: TestClass, TestMethod, temp, count)
+
+Good to Have:
+-> Always derive variables on start of the method or class
+-> Maintain code Quality(Try to re use the common methods)
+
+When can we club our 8 individual tasks & Streamline it as a Azure Supported BDD Framework?
+-> Once your code is reviewed, I will help in integrating all of these 8 tasks
+
+By when should we Achieve this?
+-> By Day 5
+
+Task 1:
+How to call a static & non static method from another class?
+
+Task 2:
+TestNG Annotations(@Test, @BeforeMethod, @AfterMethod, @BeforeClass, @AfterClass, @BeforeTest, @AfterTest, @BeforeSuite, @AfterSuite,dependsOnMethods)
+Parallel Execution in TestNG( Suite-level parallelism,  Method-level parallelism,  Class-level parallelism)
+
+Task 3:
+Cucumber Feature File Creation(Given, When, Then, And, But, Scenario, Scenario Outline, Feature)
+Step Definition Creation for above Keywords
+
+Task 4:
+Extent Reports Creation(createTest, createNode)
+
+Task 5:
+Input Spread sheet(Take 3*3 Table data from spreadsheet; Store it in a list & print it in the console)
+Output Excel sheet(Try to pump the 3*3 table data taken from input sheet to a new Spreadsheet)
+
+Task 6:
+Git Commit - Commit your code to GIT Repo
+
+Task 7:
+Azure CICD - Create a Testing pipeline & Run your code
+
+Task 8:
+Locators -> (All the 8 locators &  Text equals, Text Contains)
+
+  
