@@ -1,0 +1,179 @@
+ LaunchController.java
+========================
+public class LaunchController
+{
+	public static ThreadLocal<WebDriver> webdriver=new ThreadLocal();
+	
+	
+	public static WebDriver driver;
+	@BeforeMethod
+	public  void launching_google() throws GeneralSecurityException, Exception{
+	
+		driver =new ChromeDriver();
+		webdriver.set(driver);
+		
+			driver.get("http://www.google.com");
+			
+	}
+	@Test
+	public void offerShift() throws InterruptedException,ClassNotFoundException,Exception{
+		
+		
+		String featureFolder="featurefiles";
+		String FeatureFile="github.feature";
+		
+		MyRunner.launch_runner(featureFolder,FeatureFile);
+	}
+	@Test
+	
+	public void offerShift2() throws InterruptedException,ClassNotFoundException,Exception{
+		
+		String featureFolder="featurefiles";
+		String instaFile="instagram.feature";
+		MyRunner.launch_runner(featureFolder,instaFile);
+		
+	}
+	
+	  @AfterMethod
+	  public void tearDown() {
+		//  driver.close();
+		 
+	  }
+	  
+
+}
+==============================================
+StepDefinationGithub.java
+================================================
+public class StepDefinationGithub extends LaunchController {
+	
+	static WebDriver driver=LaunchController.driver;
+	 
+	
+	@Given("^enter github login and click on enter button$")
+	public void click_on_githublogin_bar() {
+	
+		System.out.println("Github Thraed:"+Thread.currentThread().getName()+" method 1");
+		driver.findElement(By.xpath("//textarea[@class='gLFyf']")).sendKeys("github signin");
+		driver.findElement(By.xpath("//textarea[@class='gLFyf']")).sendKeys(Keys.ENTER);//h3[@class='LC20lb MBeuO DKV0Md']
+		
+	}
+	
+	@Then("^Sign in of github is open$")
+	public void open_github_signin_page(){
+		System.out.println("Github Thraed:"+Thread.currentThread().getName()+" method 2");
+		driver.findElement(By.xpath("//h3[@class='LC20lb MBeuO DKV0Md']")).click();
+		
+	}
+	
+	@Then("^enter details of username and password$")
+	public void login_credentials() {
+		System.out.println("Github Thraed:"+Thread.currentThread().getName()+" method 3");
+		String uname= (String)GoogleSheetData.controllerSheetData2.get(1).get(0);
+		String password=(String)GoogleSheetData.controllerSheetData2.get(1).get(1);
+		driver.findElement(By.xpath("//input[@id='login_field']")).sendKeys(uname);
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(password);
+		
+	}
+	
+	@Then("^Click on enter and navigate to github page$")
+	public void navigate_to_gituhub() {
+		System.out.println("Github Thraed:"+Thread.currentThread().getName()+" method 4");
+		driver.findElement(By.xpath("//input[@value='Sign in']")).click();
+		
+	}
+	
+}
+=========================================================
+StepDesinationsInstagram.java
+====================================================
+
+import testcontrollers.LaunchController;
+
+public class StepDesinationsInstagram extends LaunchController {
+	
+	 
+	static WebDriver driver=LaunchController.driver;
+	
+	@Given("^enter instagram login and click on enter button$")
+	public void click_on_instalogin_bar() {
+		
+		System.out.println("Instagram Thraed:"+Thread.currentThread().getName()+" method 1");
+		driver.findElement(By.xpath("//textarea[@class='gLFyf']")).sendKeys("instagram login");
+		driver.findElement(By.xpath("//textarea[@class='gLFyf']")).sendKeys(Keys.ENTER);
+		
+	}
+	
+	@Then("^Sign in of instagram is open$")
+	public void open_insta_signin_page(){
+		System.out.println("Instagram Thraed:"+Thread.currentThread().getName()+" method 2");
+		driver.findElement(By.xpath("(//span[@class='VuuXrf'])[1]")).click();
+	
+	}
+	
+	@Then("^enter details of usernames and passwords$")
+	public void login_credentials() {
+		System.out.println("Instagram Thraed:"+Thread.currentThread().getName()+" method 3");
+		String uname= (String)GoogleSheetData.controllerSheetData.get(1).get(0);
+		String password=(String)GoogleSheetData.controllerSheetData.get(1).get(1);
+		
+		driver.findElement(By.xpath("//input[@type='text']")).sendKeys(uname);
+		driver.findElement(By.name("password")).sendKeys(password);
+		
+		
+	}
+	
+	@Then("^Click on enter and navigate to instagram page$")
+	public void navigate_to_insta() {
+		System.out.println("Instagram Thraed:"+Thread.currentThread().getName()+" method 4");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+	
+	}
+	
+}
+=============================================================
+ MyRunner.java
+=============================================
+package myrunner;
+
+public class MyRunner {
+	
+	public static byte resultByteResult=0;
+
+	public static void featureRunner(String [] args) {
+		
+		resultByteResult=Main.run(args,Thread.currentThread().getContextClassLoader());
+	}
+	
+	public static void launch_runner(String featureFolder, String FeatureFile) {
+		
+		featureRunner(new String[] {"--threads","1","-g","stepdefinationfiles","src/test/resources/"+featureFolder+"/"+FeatureFile});
+		
+	}
+
+}
+=========================================================
+github.feature
+=============================
+Feature: Login into Github Account
+
+Scenario: Successfully login into GitHUb account
+
+Given enter github login and click on enter button
+Then Sign in of github is open
+Then enter details of username and password
+Then Click on enter and navigate to github page
+============================================================
+login.feature
+===================================================
+Feature: Login into Instagram Account
+
+Scenario: Successfully login into Instagram account
+
+Given enter instagram login and click on enter button
+Then Sign in of instagram is open
+Then enter details of usernames and passwords
+Then Click on enter and navigate to instagram page
+
+===================================================================================
+Problem is two chromes launch.Github login in one chrome and instagram login into another chrome .Both chromes work simantaneously.Thraed synchronization problem occurs.Give me correct solution.
